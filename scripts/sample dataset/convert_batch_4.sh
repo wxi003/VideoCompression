@@ -1,0 +1,142 @@
+#!/bin/bash
+
+# Set paths
+base_dir=~/compression_experiments
+output_dir="$base_dir/y4m/codec"
+mkdir -p "$output_dir"
+
+# Hardcoded video file list (batch 4)
+video_files=(
+Animation_1080P-209f_crf_10_ss_00_t_20.0_libx265_1000k_fast_keyint120.y4m
+Animation_1080P-4be3_crf_10_ss_00_t_20.0_libx265_2000k_medium_keyint30.y4m
+Animation_480P-7a31_crf_10_ss_00_t_20.0_libx265_1000k_slow_keyint120.y4m
+Animation_720P-2525_crf_10_ss_00_t_20.0_libx264_1000k_fast_keyint120.y4m
+Animation_720P-01b3_crf_10_ss_00_t_20.0_libx264_1000k_slow_keyint120.y4m
+Animation_480P-52af_crf_10_ss_00_t_20.0_libx265_1000k_fast_keyint60.y4m
+Animation_480P-4b86_crf_10_ss_00_t_20.0_libx265_4000k_veryslow_keyint60.y4m
+Animation_360P-794f_crf_10_ss_00_t_20.0_libx264_2000k_veryslow_keyint120.y4m
+Animation_480P-6ef6_crf_10_ss_00_t_20.0_libx264_4000k_slow_keyint120.y4m
+Animation_480P-6ef6_crf_10_ss_00_t_20.0_libx265_1000k_ultrafast_keyint120.y4m
+Animation_360P-08c9_crf_10_ss_00_t_20.0_libx264_2000k_ultrafast_keyint120.y4m
+Animation_360P-794f_crf_10_ss_00_t_20.0_libx264_1000k_ultrafast_keyint120.y4m
+Animation_720P-6372_crf_10_ss_00_t_20.0_libx264_4000k_medium_keyint120.y4m
+Animation_360P-188f_crf_10_ss_00_t_20.0_libx264_1000k_fast_keyint120.y4m
+Animation_360P-4edc_crf_10_ss_00_t_20.0_libx264_500k_slow_keyint120.y4m
+Animation_480P-4e36_crf_10_ss_00_t_20.0_libx264_2000k_fast_keyint120.y4m
+Animation_360P-4edc_crf_10_ss_00_t_20.0_libx265_4000k_veryslow_keyint60.y4m
+Animation_480P-35ee_crf_10_ss_00_t_20.0_libx264_4000k_veryslow_keyint120.y4m
+Animation_720P-620f_crf_10_ss_00_t_20.0_libx264_4000k_slow_keyint30.y4m
+Animation_1080P-3d67_crf_10_ss_00_t_20.0_libx264_4000k_slow_keyint30.y4m
+Animation_720P-13b7_crf_10_ss_00_t_20.0_libx265_500k_ultrafast_keyint60.y4m
+Animation_360P-69e0_crf_10_ss_00_t_20.0_libx265_500k_veryslow_keyint120.y4m
+Animation_360P-69e0_crf_10_ss_00_t_20.0_libx264_500k_medium_keyint60.y4m
+Animation_480P-7a31_crf_10_ss_00_t_20.0_libx264_500k_medium_keyint60.y4m
+Animation_480P-4e36_crf_10_ss_00_t_20.0_libx264_500k_ultrafast_keyint60.y4m
+Animation_1080P-3d67_crf_10_ss_00_t_20.0_libx265_4000k_ultrafast_keyint30.y4m
+Animation_720P-79ee_crf_10_ss_00_t_20.0_libx264_500k_fast_keyint60.y4m
+Animation_1080P-4be3_crf_10_ss_00_t_20.0_libx264_2000k_medium_keyint30.y4m
+Animation_480P-52af_crf_10_ss_00_t_20.0_libx264_4000k_ultrafast_keyint60.y4m
+Animation_720P-620f_crf_10_ss_00_t_20.0_libx264_4000k_veryslow_keyint30.y4m
+Animation_360P-5de0_crf_10_ss_00_t_20.0_libx265_4000k_medium_keyint30.y4m
+Animation_360P-08c9_crf_10_ss_00_t_20.0_libx264_2000k_slow_keyint30.y4m
+Animation_720P-06a6_crf_10_ss_00_t_20.0_libx264_2000k_medium_keyint60.y4m
+Animation_480P-6e23_crf_10_ss_00_t_20.0_libx264_2000k_veryslow_keyint30.y4m
+Animation_1080P-3d67_crf_10_ss_00_t_20.0_libx264_500k_slow_keyint120.y4m
+Animation_360P-47cc_crf_10_ss_00_t_20.0_libx265_500k_veryslow_keyint60.y4m
+Animation_480P-70d4_crf_10_ss_00_t_20.0_libx265_4000k_ultrafast_keyint30.y4m
+Animation_480P-087e_crf_10_ss_00_t_20.0_libx264_500k_ultrafast_keyint120.y4m
+Animation_360P-188f_crf_10_ss_00_t_20.0_libx265_4000k_medium_keyint30.y4m
+Animation_720P-57d9_crf_10_ss_00_t_20.0_libx264_4000k_fast_keyint60.y4m
+Animation_480P-7ef2_crf_10_ss_00_t_20.0_libx265_1000k_medium_keyint60.y4m
+Animation_1080P-4214_crf_10_ss_00_t_20.0_libx265_2000k_ultrafast_keyint120.y4m
+Animation_360P-08c9_crf_10_ss_00_t_20.0_libx264_4000k_veryslow_keyint60.y4m
+Animation_1080P-2fff_crf_10_ss_00_t_20.0_libx265_4000k_slow_keyint120.y4m
+Animation_1080P-4214_crf_10_ss_00_t_20.0_libx264_500k_veryslow_keyint30.y4m
+Animation_480P-7ef2_crf_10_ss_00_t_20.0_libx265_4000k_veryslow_keyint30.y4m
+Animation_480P-6ef6_crf_10_ss_00_t_20.0_libx265_2000k_fast_keyint60.y4m
+Animation_1080P-58d3_crf_10_ss_00_t_20.0_libx265_2000k_veryslow_keyint30.y4m
+Animation_480P-0d04_crf_10_ss_00_t_20.0_libx265_1000k_medium_keyint120.y4m
+Animation_360P-69e0_crf_10_ss_00_t_20.0_libx264_500k_medium_keyint120.y4m
+Animation_720P-2abf_crf_10_ss_00_t_20.0_libx264_500k_ultrafast_keyint60.y4m
+Animation_360P-794f_crf_10_ss_00_t_20.0_libx265_1000k_fast_keyint60.y4m
+Animation_360P-08c9_crf_10_ss_00_t_20.0_libx265_4000k_medium_keyint60.y4m
+Animation_1080P-646f_crf_10_ss_00_t_20.0_libx265_4000k_veryslow_keyint60.y4m
+Animation_360P-631c_crf_10_ss_00_t_20.0_libx265_4000k_medium_keyint120.y4m
+Animation_360P-69e0_crf_10_ss_00_t_20.0_libx264_4000k_slow_keyint120.y4m
+Animation_720P-06a6_crf_10_ss_00_t_20.0_libx264_500k_slow_keyint30.y4m
+Animation_720P-01b3_crf_10_ss_00_t_20.0_libx265_4000k_slow_keyint30.y4m
+Animation_480P-6e23_crf_10_ss_00_t_20.0_libx265_500k_medium_keyint30.y4m
+Animation_480P-3fdf_crf_10_ss_00_t_20.0_libx265_1000k_slow_keyint30.y4m
+Animation_360P-3e40_crf_10_ss_00_t_20.0_libx265_4000k_ultrafast_keyint60.y4m
+Animation_480P-0d04_crf_10_ss_00_t_20.0_libx264_1000k_medium_keyint60.y4m
+Animation_720P-620f_crf_10_ss_00_t_20.0_libx265_4000k_veryslow_keyint120.y4m
+Animation_720P-7b29_crf_10_ss_00_t_20.0_libx265_4000k_fast_keyint30.y4m
+Animation_360P-69e0_crf_10_ss_00_t_20.0_libx264_2000k_veryslow_keyint120.y4m
+Animation_720P-41d6_crf_10_ss_00_t_20.0_libx264_1000k_slow_keyint30.y4m
+Animation_1080P-2fff_crf_10_ss_00_t_20.0_libx264_2000k_slow_keyint120.y4m
+Animation_1080P-5dd8_crf_10_ss_00_t_20.0_libx264_500k_fast_keyint30.y4m
+Animation_1080P-21dd_crf_10_ss_00_t_20.0_libx264_2000k_medium_keyint60.y4m
+Animation_480P-791b_crf_10_ss_00_t_20.0_libx265_1000k_fast_keyint60.y4m
+Animation_1080P-4be3_crf_10_ss_00_t_20.0_libx265_2000k_slow_keyint120.y4m
+Animation_2160P-6f3b_crf_10_ss_00_t_20.0_libx264_4000k_fast_keyint30.y4m
+Animation_360P-188f_crf_10_ss_00_t_20.0_libx264_2000k_fast_keyint60.y4m
+Animation_720P-620f_crf_10_ss_00_t_20.0_libx265_2000k_slow_keyint60.y4m
+Animation_480P-7a31_crf_10_ss_00_t_20.0_libx264_2000k_fast_keyint30.y4m
+Animation_720P-57d9_crf_10_ss_00_t_20.0_libx264_4000k_ultrafast_keyint30.y4m
+Animation_720P-0116_crf_10_ss_00_t_20.0_libx265_500k_fast_keyint60.y4m
+Animation_720P-7e7d_crf_10_ss_00_t_20.0_libx265_1000k_ultrafast_keyint30.y4m
+Animation_720P-01b3_crf_10_ss_00_t_20.0_libx265_4000k_medium_keyint120.y4m
+Animation_1080P-3d67_crf_10_ss_00_t_20.0_libx264_4000k_medium_keyint120.y4m
+Animation_480P-4e36_crf_10_ss_00_t_20.0_libx265_1000k_fast_keyint120.y4m
+Animation_1080P-3d67_crf_10_ss_00_t_20.0_libx265_2000k_fast_keyint30.y4m
+Animation_480P-3fdf_crf_10_ss_00_t_20.0_libx264_2000k_medium_keyint30.y4m
+Animation_720P-412a_crf_10_ss_00_t_20.0_libx264_2000k_veryslow_keyint120.y4m
+Animation_1080P-58d3_crf_10_ss_00_t_20.0_libx265_500k_ultrafast_keyint60.y4m
+Animation_1080P-3dbf_crf_10_ss_00_t_20.0_libx265_2000k_medium_keyint30.y4m
+Animation_360P-24d4_crf_10_ss_00_t_20.0_libx264_2000k_slow_keyint60.y4m
+Animation_480P-4e36_crf_10_ss_00_t_20.0_libx265_500k_veryslow_keyint60.y4m
+Animation_720P-3adc_crf_10_ss_00_t_20.0_libx264_2000k_slow_keyint30.y4m
+Animation_360P-4b4c_crf_10_ss_00_t_20.0_libx264_4000k_fast_keyint60.y4m
+Animation_1080P-4be3_crf_10_ss_00_t_20.0_libx264_4000k_fast_keyint60.y4m
+Animation_480P-073c_crf_10_ss_00_t_20.0_libx265_2000k_veryslow_keyint120.y4m
+Animation_1080P-3d67_crf_10_ss_00_t_20.0_libx264_4000k_slow_keyint60.y4m
+Animation_480P-0d04_crf_10_ss_00_t_20.0_libx265_1000k_ultrafast_keyint30.y4m
+Animation_720P-2abf_crf_10_ss_00_t_20.0_libx265_2000k_fast_keyint120.y4m
+Animation_720P-3adc_crf_10_ss_00_t_20.0_libx264_1000k_slow_keyint30.y4m
+Animation_720P-4268_crf_10_ss_00_t_20.0_libx264_4000k_fast_keyint120.y4m
+Animation_480P-046c_crf_10_ss_00_t_20.0_libx265_500k_fast_keyint60.y4m
+Animation_720P-3adc_crf_10_ss_00_t_20.0_libx265_500k_fast_keyint60.y4m
+Animation_2160P-6f3b_crf_10_ss_00_t_20.0_libx264_4000k_medium_keyint30.y4m
+)
+
+echo "Processing video batch 4..."
+
+for video in "${video_files[@]}"; do
+    # Determine codec (libx264 → h264, libx265 → h265)
+    if [[ "$video" == *"libx264"* ]]; then
+        codec_dir="h264"
+    elif [[ "$video" == *"libx265"* ]]; then
+        codec_dir="h265"
+    else
+        echo "Unknown codec in $video, skipping..."
+        continue
+    fi
+
+    mp4_file="$base_dir/$codec_dir/animation/${video%.y4m}.mp4"
+    out_y4m="$output_dir/$video"
+
+    if [ -f "$out_y4m" ]; then
+        if head -n 1 "$out_y4m" | grep -q "YUV4MPEG2"; then
+            echo "Skipping $video (already converted and valid)"
+            continue
+        else
+            echo "Corrupted Y4M found for $video, reconverting..."
+        fi
+    else
+        echo "Converting $video to Y4M..."
+    fi
+
+    ffmpeg -y -i "$mp4_file" -pix_fmt yuv420p -fps_mode passthrough "$out_y4m"
+done
+
+echo "Batch 4 MP4s processed!"
