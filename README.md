@@ -38,5 +38,13 @@ With video streaming accounting for over 80% of global internet traffic, efficie
 │   ├── extract_compressed_frames_commands.sh
 │   └── updated_batch_kid_evaluation.py
 ├── data analysis/
-
+│   ├── Average_Compression_Time_By_Codec.png
+│   ├── Bitrate_vs_VideoQuality.png
+│   ├── Compression_Time_vs_VideoQuality.png
+│   ├── File_Size_vs_VideoQuality.png
+│   ├── MOS_vs_KID_MEAN.png
+│   ├── MOS_vs_PSNR.png
+│   ├── MOS_vs_VMAF.png
+│   ├── data_analysis.py
+│   ├── merged_with_mos.py
 └── README.md
