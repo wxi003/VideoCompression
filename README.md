@@ -1,4 +1,4 @@
-# Comparative Analysis of Modern Video Codecs: H.264, H.265, and AV1 Using Objective and Perceptual Metrics
+# CS 4490 Thesis: Comparative Analysis of Modern Video Codecs: H.264, H.265, and AV1 Using Objective and Perceptual Metrics
 
 This repository contains the full source files, data, scripts, and final report for the CS4490Z undergraduate thesis project at Western University (2025), authored by Xi Wang. The project compares the performance of three modern video codecs—**H.264**, **H.265**, and **AV1**—using both **objective** and **perceptual** quality metrics.
 
@@ -8,10 +8,8 @@ This repository contains the full source files, data, scripts, and final report 
 
 With video streaming accounting for over 80% of global internet traffic, efficient video compression is crucial. This thesis investigates codec efficiency, video quality, and encoding speed across various bitrate and preset combinations using:
 
-- **Objective Metrics**: VMAF, PSNR  
-- **Perceptual Metric**: Kernel Inception Distance (KID)  
-- **Subjective Ratings**: Mean Opinion Scores (MOS)
-
+- **Objective Metrics**: PSNR  
+- **Perceptual Metric**: VMAF, KID, MOS  
 ---
 
 ## Research Goals
@@ -27,7 +25,7 @@ With video streaming accounting for over 80% of global internet traffic, efficie
 ```plaintext
 .
 ├── report/
-│   └── 4490 Project Final Report.pdf       # Final report (22 pages, includes figures)
+│   └── CS4490_Thesis_Final_Report.pdf      # Final report (22 pages, includes figures)
 ├── data/
 │   ├── original_videos_MOS.xlsx            # Mean Opinion Score data from UGC dataset
 │   ├── encoding_log.xlsx                   # Compression metadata
