@@ -26,7 +26,7 @@ With video streaming accounting for over 80% of global internet traffic, efficie
 .
 ├── report/
 │   └── CS4490_Thesis_Final_Report.pdf      # Final report (22 pages, includes figures)
-├── data/
+├── data files/
 │   ├── original_videos_MOS.xlsx            # Mean Opinion Score data from UGC dataset
 │   ├── encoding_log.xlsx                   # Compression metadata
 │   ├── evaluation_log.csv                  # VMAF and PSNR scores
@@ -37,4 +37,6 @@ With video streaming accounting for over 80% of global internet traffic, efficie
 │   ├── extract_frames_commands.sh
 │   ├── extract_compressed_frames_commands.sh
 │   └── updated_batch_kid_evaluation.py
+├── data analysis/
+
 └── README.md
