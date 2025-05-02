@@ -31,8 +31,8 @@ With video streaming accounting for over 80% of global internet traffic, efficie
 ├── data/
 │   ├── original_videos_MOS.xlsx            # Mean Opinion Score data from UGC dataset
 │   ├── encoding_log.xlsx                   # Compression metadata
-│   ├── evaluation_log.xlsx                 # VMAF and PSNR scores
-│   └── kid_scores_50_frames.xlsx           # KID metrics for compressed vs. original frames
+│   ├── evaluation_log.csv                  # VMAF and PSNR scores
+│   └── kid_scores_50_frames.csv            # KID metrics for compressed vs. original frames
 ├── scripts/
 │   ├── convert_encoded_to_y4m.sh
 │   ├── evaluate_codec_y4m.sh
